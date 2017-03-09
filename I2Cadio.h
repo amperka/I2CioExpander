@@ -31,14 +31,14 @@ public:
     void saveAddr();
     void reset();
     int  digitalRead(int pin);
-    int  analogRead(int pin, uint8_t avgCount);
+    int  analogRead(int pin, uint8_t avgCount = 2);
 
 private:
     uint8_t _i2caddress;
-    void writeCmdPinVal(IOcommand command, uint8_t pin, uint8_t value, bool sendStop);
+    void writeCmdPinVal(IOcommand command, uint8_t pin, uint8_t value, bool sendStop = true);
     void writeCmd16BitData(IOcommand command, uint16_t data);
     void writeCmd8BitData(IOcommand command, uint8_t data);
-    void writeCmd(IOcommand command, bool sendStop);
+    void writeCmd(IOcommand command, bool sendStop = true);
     int  read16Bit();
 };
 

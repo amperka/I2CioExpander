@@ -1,4 +1,4 @@
-#include "ADIO.h"
+#include "I2Cadio.h"
 #include <Wire.h>
 
 void ADIO::writeCmdPinVal(IOcommand command, uint8_t pin, uint8_t value, bool sendStop)
@@ -40,9 +40,10 @@ void ADIO::writeCmd(IOcommand command, bool sendStop)
 int ADIO::read16Bit()
 {
     int result = -1;
-    Wire.requestFrom(_i2caddress, 2);
+    uint8_t byteCount = 2;
+    Wire.requestFrom(_i2caddress, byteCount);
     uint16_t counter = 0xff;
-    while (Wire.available()!=2)
+    while (Wire.available() < byteCount)
     {
         if (!(--counter))
             return result;
