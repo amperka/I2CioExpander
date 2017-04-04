@@ -32,6 +32,7 @@ public:
     void reset();
     int  digitalRead(int pin);
     int  analogRead(int pin, uint8_t avgCount = 2);
+    uint32_t getUID();
 
 private:
     uint8_t _i2caddress;
@@ -40,6 +41,7 @@ private:
     void writeCmd8BitData(IOcommand command, uint8_t data);
     void writeCmd(IOcommand command, bool sendStop = true);
     int  read16Bit();
+    uint32_t read32bit();
 };
 
 #endif //_I2C_ADIO_

@@ -54,6 +54,25 @@ int ADIO::read16Bit()
     return result;
 }
 
+uint32_t ADIO::read32bit()
+{
+    uint32_t result = 0xffffffff; // https://www.youtube.com/watch?v=y73hyMP1a-E
+    uint8_t byteCount = 4;
+    Wire.requestFrom(_i2caddress, byteCount);
+    uint16_t counter = 0xff;
+    while (Wire.available() < byteCount)
+    {
+        if (!(--counter))
+            return result;
+    }
+    for (uint8_t i = 0; i < 3; ++i) {
+      result = Wire.read();
+      result <<= 8;
+    }
+    result |= Wire.read();
+    return result;
+}
+
 ADIO::ADIO(uint8_t i2caddress)
 {
     _i2caddress = i2caddress;
@@ -122,4 +141,10 @@ void ADIO::saveAddr()
 void ADIO::reset()
 {
     writeCmd(RESET);
+}
+
+uint32_t ADIO::getUID()
+{
+    writeCmd(WHO_AM_I);
+    return read32bit();
 }
