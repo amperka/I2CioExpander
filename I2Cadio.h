@@ -33,6 +33,8 @@ public:
     int  digitalRead(int pin);
     int  analogRead(int pin, uint8_t avgCount = 2);
     uint32_t getUID();
+    int digitalReadPort();
+    void digitalWritePort(uint16_t value);
 
 private:
     uint8_t _i2caddress;

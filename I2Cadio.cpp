@@ -78,6 +78,12 @@ ADIO::ADIO(uint8_t i2caddress)
     _i2caddress = i2caddress;
 }
 
+void ADIO::digitalWritePort(uint16_t value)
+{
+    writeCmd16BitData(DIGITAL_WRITE_HIGH, value);
+    writeCmd16BitData(DIGITAL_WRITE_LOW, ~value);
+}
+
 void ADIO::digitalWrite(int pin, bool value)
 {
     uint16_t sendData = 1<<pin;
@@ -88,13 +94,17 @@ void ADIO::digitalWrite(int pin, bool value)
     }
 }
 
+int ADIO::digitalReadPort()
+{
+    writeCmd(DIGITAL_READ, false);
+    return read16Bit();
+}
+
 int ADIO::digitalRead(int pin)
 {
-    int result = -1;
-    writeCmd(DIGITAL_READ, false);
-    int answer = read16Bit();
-    if (answer >= 0) {
-        result = ((answer & (1<<pin))? 1 : 0); //:)
+    int result = digitalReadPort();
+    if (result >= 0) {
+        result = ((result & (1<<pin))? 1 : 0); //:)
     }
     return result;
 }
