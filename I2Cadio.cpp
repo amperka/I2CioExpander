@@ -10,6 +10,20 @@ void ADIO::writeCmdPinVal(IOcommand command, uint8_t pin, uint8_t value, bool se
     Wire.endTransmission(sendStop);
 }
 
+void ADIO::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop)
+{
+    Wire.beginTransmission( _i2caddress );
+    Wire.write((uint8_t)command);
+    Wire.write(pin);
+    uint8_t temp;
+    temp = (value >> 8) & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+    temp = value & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+    Wire.endTransmission(sendStop);
+}
+
+
 void ADIO::writeCmd16BitData(IOcommand command, uint16_t data)
 {
     Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
@@ -118,10 +132,13 @@ void ADIO::pinMode(int pin, uint8_t mode)
         writeCmd16BitData(PORT_MODE_OUTPUT, sendData);
     } else if (mode == INPUT_PULLUP) {
         writeCmd16BitData(PORT_MODE_PULLUP, sendData);
+    } else if (mode == INPUT_PULLDOWN) {
+        writeCmd16BitData(PORT_MODE_PULLDOWN, sendData);
     }
+
 }
 
-void ADIO::analogWrite(int pin, uint8_t pulseWidth)
+void ADIO::analogWrite(int pin, uint16_t pulseWidth)
 {
     writeCmdPinVal(ANALOG_WRITE, (uint8_t)pin, pulseWidth, true);
 }
