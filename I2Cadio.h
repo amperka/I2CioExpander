@@ -36,14 +36,14 @@ public:
     void saveAddr();
     void reset();
     int  digitalRead(int pin);
-    int  analogRead(int pin, uint8_t avgCount = 2);
+    int  analogRead(int pin);//, uint8_t avgCount = 2);
     uint32_t getUID();
     int digitalReadPort();
     void digitalWritePort(uint16_t value);
 
 private:
     uint8_t _i2caddress;
-    void writeCmdPinVal(IOcommand command, uint8_t pin, uint8_t value, bool sendStop = true);
+    void writeCmdPinVal(IOcommand command, uint8_t pin, bool sendStop = true);
     void writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop = true);
     void writeCmd16BitData(IOcommand command, uint16_t data);
     void writeCmd8BitData(IOcommand command, uint8_t data);
