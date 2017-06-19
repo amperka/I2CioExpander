@@ -1,7 +1,7 @@
 #include "I2Cadio.h"
 #include <Wire.h>
 
-void ADIO::writeCmdPinVal(IOcommand command, uint8_t pin, bool sendStop)
+void ADIO::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
@@ -145,7 +145,7 @@ void ADIO::analogWrite(int pin, uint16_t pulseWidth)
 
 int ADIO::analogRead(int pin)
 {
-    writeCmdPinVal(ANALOG_READ, (uint8_t)pin, false);
+    writeCmdPin(ANALOG_READ, (uint8_t)pin, false);
     return read16Bit();
 }
 
