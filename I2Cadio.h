@@ -30,7 +30,8 @@ public:
     ADIO(uint8_t i2caddress);
     void digitalWrite(int pin, bool value);
     void pinMode(int pin, uint8_t mode);
-    void analogWrite(int pin, uint16_t pulseWidth);
+    void analogWrite(int pin, uint8_t pulseWidth);
+    void analogWrite_16(int pin, uint16_t pulseWidth);
     void pwmFreq(uint16_t freq);
     void changeAddr(uint8_t newAddr);
     void saveAddr();

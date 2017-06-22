@@ -137,9 +137,15 @@ void ADIO::pinMode(int pin, uint8_t mode)
 
 }
 
-void ADIO::analogWrite(int pin, uint16_t pulseWidth)
+void ADIO::analogWrite_16(int pin, uint16_t pulseWidth)
 {
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, pulseWidth, true);
+}
+
+void ADIO::analogWrite(int pin, uint8_t pulseWidth)
+{
+    uint16_t val = map(pulseWidth, 0, 255, 0, 65535);
+    writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, val, true);
 }
 
 int ADIO::analogRead(int pin)
