@@ -6,7 +6,6 @@ void ADIO::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
     Wire.write(pin);
-//    Wire.write(value);
     Wire.endTransmission(sendStop);
 }
 
@@ -145,7 +144,7 @@ void ADIO::analogWrite(int pin, uint16_t pulseWidth)
 
 int ADIO::analogRead(int pin)
 {
-    writeCmdPin(ANALOG_READ, (uint8_t)pin, false);
+    writeCmdPin(ANALOG_READ, (uint8_t)pin, true);
     return read16Bit();
 }
 
