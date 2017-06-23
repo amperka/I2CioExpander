@@ -159,6 +159,12 @@ void ADIO::pwmFreq(uint16_t freq)
     writeCmd16BitData(PWM_FREQ, freq);
 }
 
+void ADIO::adcSpeed(uint8_t speed)
+{
+    // speed must be < 8. Smaller is faster, but dirty
+    writeCmd8BitData(ADC_SPEED, speed);
+}
+
 void ADIO::changeAddr(uint8_t newAddr)
 {
     writeCmd8BitData(CHANGE_I2C_ADDR, newAddr);

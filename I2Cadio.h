@@ -22,6 +22,7 @@ enum IOcommand {
     , ANALOG_WRITE // Запустить ШИМ
     , ANALOG_READ // Считать значениие с АЦП
     , PWM_FREQ // установка частоты ШИМ (общая для всех PWM-пинов)
+    , ADC_SPEED
 };
 
 class ADIO 
@@ -41,6 +42,7 @@ public:
     uint32_t getUID();
     int digitalReadPort();
     void digitalWritePort(uint16_t value);
+    void adcSpeed(uint8_t speed);
 
 private:
     uint8_t _i2caddress;
