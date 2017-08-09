@@ -4,6 +4,7 @@
 ADIO adio(42);
 void setup() {
   Serial.begin(9600);
+  Wire.begin();
   for (int i = 0; i < 9; ++i)
     adio.pinMode(i, INPUT_PULLUP);
 }
