@@ -89,6 +89,8 @@ uint32_t ADIO::read32bit()
 ADIO::ADIO(uint8_t i2caddress)
 {
     _i2caddress = i2caddress;
+    reset();
+    delay(10);
 }
 
 void ADIO::digitalWritePort(uint16_t value)
