@@ -1,7 +1,7 @@
-#include "I2Cadio.h"
+#include "GpioExtender.h"
 #include <Wire.h>
 
-void ADIO::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
+void GpioExtender::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
@@ -9,7 +9,7 @@ void ADIO::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
     Wire.endTransmission(sendStop);
 }
 
-void ADIO::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop)
+void GpioExtender::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
@@ -23,7 +23,7 @@ void ADIO::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool
 }
 
 
-void ADIO::writeCmd16BitData(IOcommand command, uint16_t data)
+void GpioExtender::writeCmd16BitData(IOcommand command, uint16_t data)
 {
     Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
     Wire.write((uint8_t)command);
@@ -35,7 +35,7 @@ void ADIO::writeCmd16BitData(IOcommand command, uint16_t data)
     Wire.endTransmission();
 }
 
-void ADIO::writeCmd8BitData(IOcommand command, uint8_t data)
+void GpioExtender::writeCmd8BitData(IOcommand command, uint8_t data)
 {
     Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
     Wire.write((uint8_t)command);
@@ -43,14 +43,14 @@ void ADIO::writeCmd8BitData(IOcommand command, uint8_t data)
     Wire.endTransmission();
 }
 
-void ADIO::writeCmd(IOcommand command, bool sendStop)
+void GpioExtender::writeCmd(IOcommand command, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
     Wire.endTransmission(sendStop);
 }
 
-int ADIO::read16Bit()
+int GpioExtender::read16Bit()
 {
     int result = -1;
     uint8_t byteCount = 2;
@@ -67,7 +67,7 @@ int ADIO::read16Bit()
     return result;
 }
 
-uint32_t ADIO::read32bit()
+uint32_t GpioExtender::read32bit()
 {
     uint32_t result = 0xffffffff; // https://www.youtube.com/watch?v=y73hyMP1a-E
     uint8_t byteCount = 4;
@@ -86,20 +86,20 @@ uint32_t ADIO::read32bit()
     return result;
 }
 
-ADIO::ADIO(uint8_t i2caddress)
+GpioExtender::GpioExtender(uint8_t i2caddress)
 {
     _i2caddress = i2caddress;
     reset();
     delay(10);
 }
 
-void ADIO::digitalWritePort(uint16_t value)
+void GpioExtender::digitalWritePort(uint16_t value)
 {
     writeCmd16BitData(DIGITAL_WRITE_HIGH, value);
     writeCmd16BitData(DIGITAL_WRITE_LOW, ~value);
 }
 
-void ADIO::digitalWrite(int pin, bool value)
+void GpioExtender::digitalWrite(int pin, bool value)
 {
     uint16_t sendData = 1<<pin;
     if (value) {
@@ -109,13 +109,13 @@ void ADIO::digitalWrite(int pin, bool value)
     }
 }
 
-int ADIO::digitalReadPort()
+int GpioExtender::digitalReadPort()
 {
     writeCmd(DIGITAL_READ, false);
     return read16Bit();
 }
 
-int ADIO::digitalRead(int pin)
+int GpioExtender::digitalRead(int pin)
 {
     int result = digitalReadPort();
     if (result >= 0) {
@@ -124,7 +124,7 @@ int ADIO::digitalRead(int pin)
     return result;
 }
 
-void ADIO::pinMode(int pin, uint8_t mode)
+void GpioExtender::pinMode(int pin, uint8_t mode)
 {
     uint16_t sendData = 1<<pin;
     if (mode == INPUT) {
@@ -139,51 +139,51 @@ void ADIO::pinMode(int pin, uint8_t mode)
 
 }
 
-void ADIO::analogWrite_16(int pin, uint16_t pulseWidth)
+void GpioExtender::analogWrite_16(int pin, uint16_t pulseWidth)
 {
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, pulseWidth, true);
 }
 
-void ADIO::analogWrite(int pin, uint8_t pulseWidth)
+void GpioExtender::analogWrite(int pin, uint8_t pulseWidth)
 {
     uint16_t val = map(pulseWidth, 0, 255, 0, 65535);
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, val, true);
 }
 
-int ADIO::analogRead(int pin)
+int GpioExtender::analogRead(int pin)
 {
     writeCmdPin(ANALOG_READ, (uint8_t)pin, true);
     return read16Bit();
 }
 
-void ADIO::pwmFreq(uint16_t freq)
+void GpioExtender::pwmFreq(uint16_t freq)
 {
     writeCmd16BitData(PWM_FREQ, freq);
 }
 
-void ADIO::adcSpeed(uint8_t speed)
+void GpioExtender::adcSpeed(uint8_t speed)
 {
     // speed must be < 8. Smaller is faster, but dirty
     writeCmd8BitData(ADC_SPEED, speed);
 }
 
-void ADIO::changeAddr(uint8_t newAddr)
+void GpioExtender::changeAddr(uint8_t newAddr)
 {
     writeCmd8BitData(CHANGE_I2C_ADDR, newAddr);
     _i2caddress = newAddr;
 }
 
-void ADIO::saveAddr()
+void GpioExtender::saveAddr()
 {
     writeCmd(SAVE_I2C_ADDR);
 }
 
-void ADIO::reset()
+void GpioExtender::reset()
 {
     writeCmd(RESET);
 }
 
-uint32_t ADIO::getUID()
+uint32_t GpioExtender::getUID()
 {
     writeCmd(WHO_AM_I);
     return read32bit();

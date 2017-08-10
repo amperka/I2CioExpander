@@ -1,17 +1,15 @@
 #include <Wire.h>
-#include <I2Cadio.h>
+#include <GpioExtender.h>
 
-ADIO adio(42);
+GpioExtender adio(42);
 void setup() {
   // put your setup code here, to run once:
   Wire.begin();
-  adio.pinMode(0, OUTPUT);
+  adio.changeAddr(45);
+  delay(100);
+  adio.saveAddr();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  adio.digitalWrite(0, HIGH);
-  delay(1000);
-  adio.digitalWrite(0, LOW);
-  delay(1000);
 }

@@ -1,7 +1,7 @@
 #include <Wire.h>
-#include <I2Cadio.h>
+#include <GpioExtender.h>
 
-ADIO adio(42);
+GpioExtender adio(42);
 void setup() {
   Serial.begin(9600);
   Wire.begin();

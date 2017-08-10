@@ -1,7 +1,7 @@
 #include <arduino.h>
 
-#ifndef _I2C_ADIO_
-#define _I2C_ADIO_
+#ifndef _GPIO_EXTENDER_
+#define _GPIO_EXTENDER_
 
 #ifndef INPUT_PULLDOWN
 #define INPUT_PULLDOWN 0x3
@@ -14,7 +14,7 @@ enum IOcommand {
     , SAVE_I2C_ADDR // Сохранить текущий адрес во флэш, чтобы стартовать при последующих включениях с него
     , PORT_MODE_INPUT // настроили пины на вход
     , PORT_MODE_PULLUP // .. вход с поддтяжкой вверх
-    , PORT_MODE_PULLDOWN
+    , PORT_MODE_PULLDOWN // .. вниз
     , PORT_MODE_OUTPUT // .. на выход
     , DIGITAL_READ    // считали состояние виртуального порта
     , DIGITAL_WRITE_HIGH // Выставили пины виртуального порта в высокий уровень
@@ -25,10 +25,10 @@ enum IOcommand {
     , ADC_SPEED
 };
 
-class ADIO 
+class GpioExtender 
 {
 public:
-    ADIO(uint8_t i2caddress);
+    GpioExtender(uint8_t i2caddress);
     void digitalWrite(int pin, bool value);
     void pinMode(int pin, uint8_t mode);
     void analogWrite(int pin, uint8_t pulseWidth);
@@ -55,4 +55,4 @@ private:
     uint32_t read32bit();
 };
 
-#endif //_I2C_ADIO_
+#endif //_GPIO_EXTENDER_
