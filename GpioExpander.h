@@ -1,7 +1,7 @@
 #include <arduino.h>
 
-#ifndef _GPIO_EXTENDER_
-#define _GPIO_EXTENDER_
+#ifndef _GPIO_EXPANDER_
+#define _GPIO_EXPANDER_
 
 #ifndef INPUT_PULLDOWN
 #define INPUT_PULLDOWN 0x3
@@ -25,10 +25,10 @@ enum IOcommand {
     , ADC_SPEED
 };
 
-class GpioExtender 
+class GpioExpander 
 {
 public:
-    GpioExtender(uint8_t i2caddress);
+    GpioExpander(uint8_t i2caddress);
     void digitalWrite(int pin, bool value);
     void pinMode(int pin, uint8_t mode);
     void analogWrite(int pin, uint8_t pulseWidth);
@@ -55,4 +55,4 @@ private:
     uint32_t read32bit();
 };
 
-#endif //_GPIO_EXTENDER_
+#endif //_GPIO_EXPANDER_

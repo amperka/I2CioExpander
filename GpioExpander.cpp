@@ -1,7 +1,7 @@
-#include "GpioExtender.h"
+#include "GpioExpander.h"
 #include <Wire.h>
 
-void GpioExtender::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
+void GpioExpander::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
@@ -9,7 +9,7 @@ void GpioExtender::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop)
     Wire.endTransmission(sendStop);
 }
 
-void GpioExtender::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop)
+void GpioExpander::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
@@ -23,7 +23,7 @@ void GpioExtender::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t val
 }
 
 
-void GpioExtender::writeCmd16BitData(IOcommand command, uint16_t data)
+void GpioExpander::writeCmd16BitData(IOcommand command, uint16_t data)
 {
     Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
     Wire.write((uint8_t)command);
@@ -35,7 +35,7 @@ void GpioExtender::writeCmd16BitData(IOcommand command, uint16_t data)
     Wire.endTransmission();
 }
 
-void GpioExtender::writeCmd8BitData(IOcommand command, uint8_t data)
+void GpioExpander::writeCmd8BitData(IOcommand command, uint8_t data)
 {
     Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
     Wire.write((uint8_t)command);
@@ -43,14 +43,14 @@ void GpioExtender::writeCmd8BitData(IOcommand command, uint8_t data)
     Wire.endTransmission();
 }
 
-void GpioExtender::writeCmd(IOcommand command, bool sendStop)
+void GpioExpander::writeCmd(IOcommand command, bool sendStop)
 {
     Wire.beginTransmission( _i2caddress );
     Wire.write((uint8_t)command);
     Wire.endTransmission(sendStop);
 }
 
-int GpioExtender::read16Bit()
+int GpioExpander::read16Bit()
 {
     int result = -1;
     uint8_t byteCount = 2;
@@ -67,7 +67,7 @@ int GpioExtender::read16Bit()
     return result;
 }
 
-uint32_t GpioExtender::read32bit()
+uint32_t GpioExpander::read32bit()
 {
     uint32_t result = 0xffffffff; // https://www.youtube.com/watch?v=y73hyMP1a-E
     uint8_t byteCount = 4;
@@ -86,20 +86,20 @@ uint32_t GpioExtender::read32bit()
     return result;
 }
 
-GpioExtender::GpioExtender(uint8_t i2caddress)
+GpioExpander::GpioExpander(uint8_t i2caddress)
 {
     _i2caddress = i2caddress;
     reset();
     delay(10);
 }
 
-void GpioExtender::digitalWritePort(uint16_t value)
+void GpioExpander::digitalWritePort(uint16_t value)
 {
     writeCmd16BitData(DIGITAL_WRITE_HIGH, value);
     writeCmd16BitData(DIGITAL_WRITE_LOW, ~value);
 }
 
-void GpioExtender::digitalWrite(int pin, bool value)
+void GpioExpander::digitalWrite(int pin, bool value)
 {
     uint16_t sendData = 1<<pin;
     if (value) {
@@ -109,13 +109,13 @@ void GpioExtender::digitalWrite(int pin, bool value)
     }
 }
 
-int GpioExtender::digitalReadPort()
+int GpioExpander::digitalReadPort()
 {
     writeCmd(DIGITAL_READ, false);
     return read16Bit();
 }
 
-int GpioExtender::digitalRead(int pin)
+int GpioExpander::digitalRead(int pin)
 {
     int result = digitalReadPort();
     if (result >= 0) {
@@ -124,7 +124,7 @@ int GpioExtender::digitalRead(int pin)
     return result;
 }
 
-void GpioExtender::pinMode(int pin, uint8_t mode)
+void GpioExpander::pinMode(int pin, uint8_t mode)
 {
     uint16_t sendData = 1<<pin;
     if (mode == INPUT) {
@@ -139,51 +139,51 @@ void GpioExtender::pinMode(int pin, uint8_t mode)
 
 }
 
-void GpioExtender::analogWrite_16(int pin, uint16_t pulseWidth)
+void GpioExpander::analogWrite_16(int pin, uint16_t pulseWidth)
 {
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, pulseWidth, true);
 }
 
-void GpioExtender::analogWrite(int pin, uint8_t pulseWidth)
+void GpioExpander::analogWrite(int pin, uint8_t pulseWidth)
 {
     uint16_t val = map(pulseWidth, 0, 255, 0, 65535);
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, val, true);
 }
 
-int GpioExtender::analogRead(int pin)
+int GpioExpander::analogRead(int pin)
 {
     writeCmdPin(ANALOG_READ, (uint8_t)pin, true);
     return read16Bit();
 }
 
-void GpioExtender::pwmFreq(uint16_t freq)
+void GpioExpander::pwmFreq(uint16_t freq)
 {
     writeCmd16BitData(PWM_FREQ, freq);
 }
 
-void GpioExtender::adcSpeed(uint8_t speed)
+void GpioExpander::adcSpeed(uint8_t speed)
 {
     // speed must be < 8. Smaller is faster, but dirty
     writeCmd8BitData(ADC_SPEED, speed);
 }
 
-void GpioExtender::changeAddr(uint8_t newAddr)
+void GpioExpander::changeAddr(uint8_t newAddr)
 {
     writeCmd8BitData(CHANGE_I2C_ADDR, newAddr);
     _i2caddress = newAddr;
 }
 
-void GpioExtender::saveAddr()
+void GpioExpander::saveAddr()
 {
     writeCmd(SAVE_I2C_ADDR);
 }
 
-void GpioExtender::reset()
+void GpioExpander::reset()
 {
     writeCmd(RESET);
 }
 
-uint32_t GpioExtender::getUID()
+uint32_t GpioExpander::getUID()
 {
     writeCmd(WHO_AM_I);
     return read32bit();
