@@ -89,8 +89,6 @@ uint32_t GpioExpander::read32bit()
 GpioExpander::GpioExpander(uint8_t i2caddress)
 {
     _i2caddress = i2caddress;
-    reset();
-    delay(10);
 }
 
 void GpioExpander::digitalWritePort(uint16_t value)
