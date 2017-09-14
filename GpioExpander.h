@@ -42,6 +42,7 @@ public:
     uint32_t getUID();
     int digitalReadPort();
     void digitalWritePort(uint16_t value);
+    void pinModePort(uint16_t value, uint8_t mode);
     void adcSpeed(uint8_t speed);
 
 private:

@@ -122,18 +122,24 @@ int GpioExpander::digitalRead(int pin)
     return result;
 }
 
+void GpioExpander::pinModePort(uint16_t value, uint8_t mode)
+{
+    if (mode == INPUT) {
+        writeCmd16BitData(PORT_MODE_INPUT, value);
+    } else if (mode == OUTPUT) {
+        writeCmd16BitData(PORT_MODE_OUTPUT, value);
+    } else if (mode == INPUT_PULLUP) {
+        writeCmd16BitData(PORT_MODE_PULLUP, value);
+    } else if (mode == INPUT_PULLDOWN) {
+        writeCmd16BitData(PORT_MODE_PULLDOWN, value);
+    }
+
+}
+
 void GpioExpander::pinMode(int pin, uint8_t mode)
 {
     uint16_t sendData = 1<<pin;
-    if (mode == INPUT) {
-        writeCmd16BitData(PORT_MODE_INPUT, sendData);
-    } else if (mode == OUTPUT) {
-        writeCmd16BitData(PORT_MODE_OUTPUT, sendData);
-    } else if (mode == INPUT_PULLUP) {
-        writeCmd16BitData(PORT_MODE_PULLUP, sendData);
-    } else if (mode == INPUT_PULLDOWN) {
-        writeCmd16BitData(PORT_MODE_PULLDOWN, sendData);
-    }
+    pinModePort(sendData, mode);
 
 }
 
