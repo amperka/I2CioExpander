@@ -177,7 +177,7 @@ void GpioExpander::changeAddr(uint8_t newAddr)
     _i2caddress = newAddr;
 }
 
-void changeAddrWithUID(uint8_t newAddr)
+void GpioExpander::changeAddrWithUID(uint8_t newAddr)
 {
     uint32_t uid = getUID();
 
