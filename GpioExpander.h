@@ -23,6 +23,8 @@ enum IOcommand {
     , ANALOG_READ // Считать значениие с АЦП
     , PWM_FREQ // установка частоты ШИМ (общая для всех PWM-пинов)
     , ADC_SPEED
+    , SEND_MASTER_READED_UID
+    , CHANGE_I2C_ADDR_IF_UID_OK
 };
 
 class GpioExpander 
@@ -35,6 +37,7 @@ public:
     void analogWrite_16(int pin, uint16_t pulseWidth);
     void pwmFreq(uint16_t freq);
     void changeAddr(uint8_t newAddr);
+    void changeAddrWithUID(uint8_t newAddr);
     void saveAddr();
     void reset();
     int  digitalRead(int pin);

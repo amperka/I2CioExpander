@@ -177,6 +177,32 @@ void GpioExpander::changeAddr(uint8_t newAddr)
     _i2caddress = newAddr;
 }
 
+void changeAddrWithUID(uint8_t newAddr)
+{
+    uint32_t uid = getUID();
+
+    Wire.beginTransmission( _i2caddress ); // Address set on class instantiation
+
+    Wire.write((uint8_t)SEND_MASTER_READED_UID);
+    uint8_t temp;
+    temp = (uid >> 24) & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+
+    temp = (uid >> 16) & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+
+    temp = (uid >> 8) & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+
+    temp = uid & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+    Wire.endTransmission();
+
+    writeCmd8BitData(CHANGE_I2C_ADDR_IF_UID_OK, newAddr);
+    _i2caddress = newAddr;
+    
+}
+
 void GpioExpander::saveAddr()
 {
     writeCmd(SAVE_I2C_ADDR);
