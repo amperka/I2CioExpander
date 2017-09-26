@@ -190,16 +190,16 @@ void GpioExpander::changeAddrWithUID(uint8_t newAddr)
 
     Wire.write((uint8_t)SEND_MASTER_READED_UID);
     uint8_t temp;
-    temp = (uid) & 0xff;
-    Wire.write(temp); // Data/setting to be sent to device
-
-    temp = (uid >> 8) & 0xff;
+    temp = (uid >> 24) & 0xff;
     Wire.write(temp); // Data/setting to be sent to device
 
     temp = (uid >> 16) & 0xff;
     Wire.write(temp); // Data/setting to be sent to device
 
-    temp = (uid >> 24) & 0xff;
+    temp = (uid >> 8) & 0xff;
+    Wire.write(temp); // Data/setting to be sent to device
+
+    temp = (uid) & 0xff;
     Wire.write(temp); // Data/setting to be sent to device
     Wire.endTransmission();
 

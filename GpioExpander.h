@@ -5,7 +5,13 @@
 
 #ifndef INPUT_PULLDOWN
 #define INPUT_PULLDOWN 0x3
-#endif //INPUT_PULLDOWN
+#endif
+//INPUT_PULLDOWN
+
+#ifndef DEFAULT_GPIOEXP_ADDR
+#define DEFAULT_GPIOEXP_ADDR 42
+#endif
+// DEFAULT_GPIOEXP_ADDR
 
 enum IOcommand {
       WHO_AM_I //Отдали UID
