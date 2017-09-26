@@ -81,7 +81,7 @@ uint32_t GpioExpander::read32bit()
     }
 
     result = 0;
-    for (uint8_t i = 0; i < byteCount; ++i) {
+    for (uint8_t i = 0; i < byteCount-1; ++i) {
       result |= Wire.read();
       result <<= 8;
     }
