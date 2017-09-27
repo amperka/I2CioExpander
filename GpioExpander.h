@@ -13,6 +13,13 @@
 #endif 
 // DEFAULT_GPIOEXP_ADDR
 
+#ifndef SLOT_COUNT_BUF
+#define SLOT_COUNT_BUF 32
+#endif 
+// SLOT_COUNT_BUF
+
+#define SLOT_PIN_COUNT 10
+
 enum IOcommand {
       WHO_AM_I //Отдали UID
     , RESET // сброс
@@ -36,7 +43,7 @@ enum IOcommand {
 class GpioExpander 
 {
 public:
-    GpioExpander(uint8_t expCount);
+    GpioExpander(uint8_t expCount = SLOT_COUNT_BUF);
     void digitalWrite(int pin, bool value);
     void pinMode(int pin, uint8_t mode);
     void analogWrite(int pin, uint8_t pulseWidth);
@@ -54,12 +61,16 @@ public:
     void pinModePort(uint8_t expNum, uint16_t value, uint8_t mode);
     void adcSpeed(uint8_t expNum, uint8_t speed);
     void begin();
+    int getPinCount();
+    int getSlotCount();
+
 
 private:
 //    uint8_t _i2caddress;
     uint8_t *_i2cAddr;
     uint8_t _expCount;
     uint8_t _lastExpNum = 0;
+    bool _addresssed = false;
     void writeCmdPin(uint8_t _i2caddress, IOcommand command, uint8_t pin, bool sendStop = true);
     void writeCmdPin16Val(uint8_t _i2caddress, IOcommand command, uint8_t pin, uint16_t value, bool sendStop = true);
     void writeCmd16BitData(uint8_t _i2caddress, IOcommand command, uint16_t data);
@@ -69,6 +80,7 @@ private:
     uint32_t read32bit(uint8_t _i2caddress);
     uint8_t expNumToAddr(uint8_t expNum);
     uint8_t pinToAddr(int pin);
+    bool i2cAddrIsNotEmpty(uint8_t addr);
     
 
 };
