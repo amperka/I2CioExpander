@@ -5,7 +5,8 @@ GpioExpander adio(42);
 void setup() {
   // put your setup code here, to run once:
   Wire.begin();
-  Serial.begin(9600);
+  adio.begin();
+  Serial.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }

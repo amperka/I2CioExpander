@@ -1,6 +1,7 @@
 #include "GpioExpander.h"
 #include <Wire.h>
 
+
 void GpioExpander::begin(TwoWire* wire){
     _wire = wire;
 }
@@ -60,9 +61,9 @@ void GpioExpander::writeCmd(IOcommand command, bool sendStop)
 int8_t GpioExpander::readInt8Bit(){
     int result = 0;
     uint8_t byteCount = 1;
-    _wire.requestFrom(i2cAddress, byteCount);
+    _wire->requestFrom(_i2caddress, byteCount);
     uint16_t counter = 0xffff;
-    while (Wire.available() < byteCount) {
+    while (_wire->available() < byteCount) {
         if (!(--counter))
             return result;
     }
@@ -208,7 +209,7 @@ void GpioExpander::changeAddrWithUID(uint8_t newAddr)
 
     _wire->beginTransmission( _i2caddress ); // Address set on class instantiation
 
-    _wire->write((uint8_t)SEND_MASTER_READED_UID);
+    _wire->write((uint8_t)MASTER_READED_UID);
     uint8_t temp;
     temp = (uid >> 24) & 0xff;
     _wire->write(temp); // Data/setting to be sent to device
@@ -238,7 +239,7 @@ void GpioExpander::saveAddr()
 
 void GpioExpander::reset()
 {
-    writeCmd(RESET);
+    writeCmd(RESET_SLAVE);
 }
 
 uint32_t GpioExpander::getUID()
@@ -254,14 +255,14 @@ void GpioExpander::adcFilter(bool enable)
 }
 
 
-void I2cio::setEncoderPins(uint8_t encoder, uint8_t pinA, uint8_t pinB)
+void GpioExpander::setEncoderPins(uint8_t encoder, uint8_t pinA, uint8_t pinB)
 {
     uint8_t pins = (pinA<<4) | (pinB & 0x0f);
     uint16_t payload = ((uint16_t)encoder << 8) | pins;
     writeCmd16BitData(ENCODER_SET_PINS, payload);
 }
 
-int8_t I2cio::readEncoderDiff(uint8_t encoder)
+int8_t GpioExpander::readEncoderDiff(uint8_t encoder)
 {
     int8_t result = 0;
     writeCmdPin(ENCODER_GET_DIFF_VALUE, encoder, true);

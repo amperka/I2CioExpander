@@ -5,6 +5,7 @@ GpioExpander adio(42);
 void setup() {
   // put your setup code here, to run once:
   Wire.begin();
+  adio.begin();
   adio.changeAddr(45);
   delay(100);
   adio.saveAddr();

@@ -7,6 +7,7 @@
 class Octoliner : public GpioExpander
 {
 public:
+	Octoliner(uint8_t i2caddress);
 	void 	setSensitivity(uint8_t sense);
  	void 	setBrightness(uint8_t brightness);
  	uint8_t getBinaryLine(); // fast and dirty

@@ -1,6 +1,6 @@
-#include <arduino.h>
+#include <Arduino.h>
+#include <Wire.h>
 #include "i2cioCommands.h"
-
 
 #ifndef _GPIO_EXPANDER_
 #define _GPIO_EXPANDER_
@@ -23,7 +23,7 @@
 class GpioExpander 
 {
 public:
-    GpioExpander(uint8_t i2caddress = DEFAULT_GPIOEXP_ADDR);
+    GpioExpander(uint8_t i2caddress);
     void begin();
     void begin(TwoWire* wire);
     void digitalWrite(int pin, bool value);
@@ -55,6 +55,7 @@ private:
     void writeCmd8BitData(IOcommand command, uint8_t data);
     void writeCmd(IOcommand command, bool sendStop = true);
     int  read16Bit();
+    int8_t readInt8Bit();
     uint32_t read32bit();
 };
 

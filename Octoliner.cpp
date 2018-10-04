@@ -1,9 +1,13 @@
 #include "Octoliner.h"
 
+Octoliner::Octoliner(uint8_t i2caddress) : GpioExpander(i2caddress){
+}
+
 void Octoliner::setSensitivity(uint8_t sense)
 {
 	analogWrite(_sensePin, sense);
 }
+
 void Octoliner::setBrightness(uint8_t brightness)
 {
 	analogWrite(_ledBrightnessPin, brightness);
