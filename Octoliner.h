@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "GpioExpander.h"
+#include <Wire.h>
 
 #ifndef OCTOLINER_H
 #define OCTOLINER_H
@@ -8,6 +9,8 @@ class Octoliner : public GpioExpander
 {
 public:
 	Octoliner(uint8_t i2caddress);
+	void begin();
+    void begin(TwoWire* wire);
 	void 	setSensitivity(uint8_t sense);
  	void 	setBrightness(uint8_t brightness);
  	uint8_t getBinaryLine(); // fast and dirty

@@ -3,6 +3,14 @@
 Octoliner::Octoliner(uint8_t i2caddress) : GpioExpander(i2caddress){
 }
 
+void Octoliner::begin(TwoWire* wire){
+    GpioExpander::begin(wire);
+    GpioExpander::pwmFreq(60000);
+}
+void Octoliner::begin(){
+    begin(&Wire);
+}
+
 void Octoliner::setSensitivity(uint8_t sense)
 {
 	analogWrite(_sensePin, sense);
@@ -16,7 +24,7 @@ void Octoliner::setBrightness(uint8_t brightness)
 int Octoliner::analogRead(uint8_t sensor)
 {
 	sensor &= 0x07;
-	return analogRead(_sensorPinMap[sensor]);
+	return GpioExpander::analogRead(_sensorPinMap[sensor]);
 }
 
 uint8_t Octoliner::getBinaryLine()
