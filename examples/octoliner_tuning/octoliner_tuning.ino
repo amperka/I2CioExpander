@@ -18,7 +18,7 @@ void loop() {
   octoliner.setBrightness(irLedBrightness);
 
   for (int i = 0; i < 8; ++i) {
-    // 0..4096 -> 0..7 range
+    // 0..4096 -> 0..32 range
     int sharpCount = octoliner.analogRead(i) >> 7;
     for (int y = 0; y <= sharpCount; y++) {
       Serial.print('#');
