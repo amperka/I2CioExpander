@@ -1,10 +1,10 @@
-GpioExpander
+I2CioExpander
 ============
 
 Библиотека для Arduino, позволяющая общаться с модулями «GpioExpander»:
 * [Расширитель GPIO-портов (Troyka-модуль)](http://amperka.ru/product/troyka-gpio-expander)
 * [Плата расширения Slot Expander](http://amperka.ru/product/wifi-slot-expander) для [WiFi Slot](http://amperka.ru/product/wifi-slot)
-* [Модуль датчиков линии (Zelo-модуль)](http://amperka.ru/product/zelo-folow-line-sensor)
+* [Модуль 8 датчиков линии (Zelo-модуль)](http://amperka.ru/product/zelo-folow-line-sensor)
 
 Установка библиотеки
 ====================
