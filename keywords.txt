@@ -1,0 +1,43 @@
+#######################################
+# Syntax Coloring Map GpioExpander
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+GpioExpander	KEYWORD1
+Octoliner	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin 	KEYWORD2
+reset 	KEYWORD2
+pinMode 	KEYWORD2
+digitalWrite 	KEYWORD2
+analogWrite 	KEYWORD2
+analogWrite16 	KEYWORD2
+digitalRead KEYWORD2
+analogRead 	KEYWORD2
+changeAddr 	KEYWORD2
+changeAddrWithUID KEYWORD2
+saveAddr 	KEYWORD2
+pinModePort 	KEYWORD2
+digitalWritePort 	KEYWORD2
+digitalReadPort 	KEYWORD2
+pwmFreq 	KEYWORD2
+getUID 	KEYWORD2
+adcSpeed 	KEYWORD2
+adcFilter 	KEYWORD2
+setEncoderPins 	KEYWORD2
+readEncoderDiff 	KEYWORD2
+setSensitivity 	KEYWORD2
+setBrightness 	KEYWORD2
+getBinaryLine 	KEYWORD2
+mapLine 	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
