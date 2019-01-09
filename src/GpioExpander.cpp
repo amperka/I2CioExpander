@@ -31,8 +31,27 @@ void GpioExpander::digitalWrite(int pin, bool value) {
     }
 }
 
-void GpioExpander::analogWrite(int pin, uint8_t pulseWidth) {
-    uint16_t val = map(pulseWidth, 0, 255, 0, 65535);
+uint16_t GpioExpander::mapResolution(uint16_t value, uint8_t from, uint8_t to)
+{
+  if (from == to) {
+    return value;
+  }
+  if (from > to) {
+    return value >> (from-to);
+  }
+  return value << (to-from);
+}
+
+void GpioExpander::analogWriteResolution(uint8_t res) {
+    _analogWriteResolution = res;
+}
+
+void GpioExpander::analogReadResolution(uint8_t res) {
+    _analogReadResolution = res;
+}
+
+void GpioExpander::analogWrite(int pin, uint16_t pulseWidth) {
+    uint16_t val = mapResolution(pulseWidth, _analogWriteResolution, 16);
     writeCmdPin16Val(ANALOG_WRITE, (uint8_t)pin, val, true);
 }
 
@@ -46,7 +65,11 @@ int GpioExpander::digitalRead(int pin) {
 
 int GpioExpander::analogRead(int pin) {
     writeCmdPin(ANALOG_READ, (uint8_t)pin, true);
-    return read16Bit();
+    int result = read16Bit();
+    if (result >= 0) {
+        result = (int)mapResolution((uint16_t)result, 12, _analogReadResolution);
+    }
+    return result;
 }
 
 void GpioExpander::changeAddr(uint8_t newAddr) {

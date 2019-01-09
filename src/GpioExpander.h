@@ -28,10 +28,10 @@ public:
     void begin(TwoWire* wire);
     void reset();
     void pinMode(int pin, uint8_t mode);
-    void analogReadResolution(int res);
-    void analogWriteResolution(int res);
+    void analogReadResolution(uint8_t res);
+    void analogWriteResolution(uint8_t res);
     void digitalWrite(int pin, bool value);
-    void analogWrite(int pin, uint8_t pulseWidth);
+    void analogWrite(int pin, uint16_t pulseWidth);
     int digitalRead(int pin);
     int analogRead(int pin);
     void changeAddr(uint8_t newAddr);
@@ -50,6 +50,8 @@ public:
 private:
     TwoWire* _wire;
     uint8_t _i2cAddress;
+    uint8_t _analogWriteResolution = 8;
+    uint8_t _analogReadResolution = 10;
     void writeCmdPin(IOcommand command, uint8_t pin, bool sendStop = true);
     void writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop = true);
     void writeCmd16BitData(IOcommand command, uint16_t data);
@@ -58,6 +60,7 @@ private:
     int8_t readInt8Bit();
     int  read16Bit();
     uint32_t read32bit();
+    uint16_t mapResolution(uint16_t value, uint8_t from, uint8_t to);
 };
 
 #endif //_GPIO_EXPANDER_
