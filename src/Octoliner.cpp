@@ -9,6 +9,7 @@ void Octoliner::begin() {
 
 void Octoliner::begin(TwoWire* wire) {
     GpioExpander::begin(wire);
+    GpioExpander::pwmFreq(8000); // ~ 250 different pwm values
 }
 
 void Octoliner::setSensitivity(uint8_t sense) {
