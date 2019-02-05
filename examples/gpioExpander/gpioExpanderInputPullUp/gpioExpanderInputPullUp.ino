@@ -12,7 +12,7 @@ void setup() {
   expander.begin();
   // выставляем все пины в режиме выхода
   for (int i = 0; i < 9; i++) {
-    adio.pinMode(i, INPUT_PULLUP);
+    expander.pinMode(i, INPUT_PULLUP);
   }
   // открываем монитор Serial-порта
   Serial.begin(115200);
@@ -20,6 +20,6 @@ void setup() {
 
 void loop() {
   // читаем весь порт
-  Serial.println(adio.digitalReadPort(), BIN);
+  Serial.println(expander.digitalReadPort(), BIN);
   delay(200);
 }
