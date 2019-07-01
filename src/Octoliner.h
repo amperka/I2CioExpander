@@ -13,8 +13,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#ifndef OCTOLINER_H
-#define OCTOLINER_H
+#ifndef __OCTOLINER_H__
+#define __OCTOLINER_H__
 
 class Octoliner : public GpioExpander {
 public:
@@ -38,4 +38,4 @@ private:
     float value;
 };
 
-#endif // OCTOLINER_H
+#endif // __OCTOLINER_H__

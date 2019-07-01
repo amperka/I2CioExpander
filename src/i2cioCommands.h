@@ -4,8 +4,8 @@
 
 */
 
-#ifndef I2CIO_COMMANDS_H
-#define I2CIO_COMMANDS_H
+#ifndef __I2CIOCOMMANDS_H__
+#define __I2CIOCOMMANDS_H__
 
 enum IOcommand {
     // Basic functions
@@ -315,4 +315,4 @@ enum IOcommand {
 };
 // section :TODO
 
-#endif // I2CIO_COMMANDS_H
+#endif // __I2CIOCOMMANDS_H__
