@@ -1,3 +1,13 @@
+/*
+ * This file is a part of modules library.
+ *
+ * Defines: gpio expander driver
+ * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * 
+ * Author: Vasily Basalaev <vasily@amperka.ru>
+ * License: GPLv3, all text here must be included in any redistribution.
+ */
+
 #include <Arduino.h>
 #include <Wire.h>
 #include "i2cioCommands.h"

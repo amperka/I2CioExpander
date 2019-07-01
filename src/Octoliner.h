@@ -1,3 +1,14 @@
+/*
+ * This file is a part of Dragster car set library.
+ *
+ * Defines: octoliner object - 8-point line-folowing sensor driver
+ * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * 
+ * Author: Vasily Basalaev <vasily@amperka.ru>
+ * Refactored by: Yury Botov <by@amperka.com>
+ * License: GPLv3, all text here must be included in any redistribution.
+ */
+
 #include <Arduino.h>
 #include "GpioExpander.h"
 #include <Wire.h>
