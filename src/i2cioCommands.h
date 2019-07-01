@@ -8,9 +8,9 @@
 #define I2CIO_COMMANDS_H
 
 enum IOcommand {
-  // Basic functions
-      UID = 0x00
-      /*
+    // Basic functions
+    UID = 0x00
+    /*
       * command     (0x00)
       * argument    no
       * answer      u32
@@ -19,8 +19,9 @@ enum IOcommand {
       (temperature and analog reference calibration values)
       */
 
-    , RESET_SLAVE
-      /*
+    ,
+    RESET_SLAVE
+    /*
       * command     (0x01)
       * argument    no
       * answer      no
@@ -28,8 +29,9 @@ enum IOcommand {
       Reset chip 
       */
 
-    , CHANGE_I2C_ADDR
-      /*
+    ,
+    CHANGE_I2C_ADDR
+    /*
       * command     (0x02)
       * argument    u8
       * answer      no
@@ -38,8 +40,9 @@ enum IOcommand {
       After power off or reset, device will start with old I2C address
       */
 
-    , SAVE_I2C_ADDR
-      /*
+    ,
+    SAVE_I2C_ADDR
+    /*
       * command     (0x03)
       * argument    no
       * answer      no
@@ -49,8 +52,9 @@ enum IOcommand {
       After power off or reset, device will start with new I2C address
       */
 
-    , PORT_MODE_INPUT
-      /*
+    ,
+    PORT_MODE_INPUT
+    /*
       * command     (0x04)
       * argument    u16
       * answer      no
@@ -59,8 +63,9 @@ enum IOcommand {
       0b0000000000000101, virtual pins 0 and 2 will be set on input mode
       */
 
-    , PORT_MODE_PULLUP
-      /*
+    ,
+    PORT_MODE_PULLUP
+    /*
       * command     (0x05)
       * argument    u16
       * answer      no
@@ -69,8 +74,9 @@ enum IOcommand {
       0b0000000000000101, virtual pins 0 and 2 will be set on input pullup mode
       */
 
-    , PORT_MODE_PULLDOWN
-      /*
+    ,
+    PORT_MODE_PULLDOWN
+    /*
       * command     (0x06)
       * argument    u16
       * answer      no
@@ -79,8 +85,9 @@ enum IOcommand {
       0b0000000000000101, virtual pins 0 and 2 will be set on input pulldown mode
       */
 
-    , PORT_MODE_OUTPUT
-      /*
+    ,
+    PORT_MODE_OUTPUT
+    /*
       * command     (0x07)
       * argument    u16
       * answer      no
@@ -89,8 +96,9 @@ enum IOcommand {
       0b0000000000000101, virtual pins 0 and 2 will be set on output mode with low value
       */
 
-    , DIGITAL_READ
-      /*
+    ,
+    DIGITAL_READ
+    /*
       * command     (0x08)
       * argument    no
       * answer      u16
@@ -100,8 +108,9 @@ enum IOcommand {
       Not change pin mode
       */
 
-    , DIGITAL_WRITE_HIGH
-      /*
+    ,
+    DIGITAL_WRITE_HIGH
+    /*
       * command     (0x09)
       * argument    u16
       * answer      no
@@ -112,8 +121,9 @@ enum IOcommand {
       Change pin mode to output
       */
 
-    , DIGITAL_WRITE_LOW
-      /*
+    ,
+    DIGITAL_WRITE_LOW
+    /*
       * command     (0x0A)
       * argument    u16
       * answer      no
@@ -124,8 +134,9 @@ enum IOcommand {
       Change pin mode to output
       */
 
-    , ANALOG_WRITE
-      /*
+    ,
+    ANALOG_WRITE
+    /*
       * command     (0x0B)
       * arguments   u8    - pin
                     u16   - value
@@ -137,8 +148,9 @@ enum IOcommand {
       Change pin mode to output
       */
 
-    , ANALOG_READ // Считать значениие с АЦП
-      /*
+    ,
+    ANALOG_READ // Считать значениие с АЦП
+    /*
       * command     (0x0C)
       * arguments   u8    - pin
       * answer      u16
@@ -148,8 +160,9 @@ enum IOcommand {
       Not change pin mode
       */
 
-    , PWM_FREQ
-      /*
+    ,
+    PWM_FREQ
+    /*
       * command     (0x0D)
       * arguments   u16   - value
       * answer      no
@@ -157,8 +170,9 @@ enum IOcommand {
       Set the PWM frequency on all pins at the same time. The PWM filling factor does not change.
       */
 
-    , ADC_SPEED
-      /*
+    ,
+    ADC_SPEED
+    /*
       * command     (0x0E)
       * arguments   u8   - value in range 0..7
       * answer      no
@@ -176,8 +190,9 @@ enum IOcommand {
       7: Sampling time 239.5 ADC clock cycles
       */
 
-    , MASTER_READED_UID
-      /*
+    ,
+    MASTER_READED_UID
+    /*
       * command     (0x0F)
       * arguments   u32   - UID
       * answer      no
@@ -189,8 +204,9 @@ enum IOcommand {
       that slave device can change i2c address with the command CHANGE_I2C_ADDR_IF_UID_OK
       */
 
-    , CHANGE_I2C_ADDR_IF_UID_OK
-      /*
+    ,
+    CHANGE_I2C_ADDR_IF_UID_OK
+    /*
       * command     (0x10)
       * arguments   u8   - new I2C address
       * answer      no
@@ -198,8 +214,9 @@ enum IOcommand {
       Set new I2C address on slave device, if slave recieve his UID on MASTER_READED_UID command
       */
 
-    , SAY_SLOT
-      /*
+    ,
+    SAY_SLOT
+    /*
       * command     (0x11)
       * arguments   no
       * answer      u32   - "slot"
@@ -209,8 +226,9 @@ enum IOcommand {
       */
 
     // 0x20 - Advanced ADC functions
-    , ADC_LOWPASS_FILTER_ON = 0x20  // command
-      /*
+    ,
+    ADC_LOWPASS_FILTER_ON = 0x20 // command
+    /*
       * command     (0x20)
       * arguments   no
       * answer      no
@@ -218,8 +236,9 @@ enum IOcommand {
       turning on ADC low pass filter. Default state
       */
 
-    , ADC_LOWPASS_FILTER_OFF        // command
-      /*
+    ,
+    ADC_LOWPASS_FILTER_OFF // command
+    /*
       * command     (0x21)
       * arguments   no
       * answer      no
@@ -227,8 +246,9 @@ enum IOcommand {
       turning of ADC low pass filter.
       */
 
-    , ADC_AS_DIGITAL_PORT_SET_TRESHOLD
-      /*
+    ,
+    ADC_AS_DIGITAL_PORT_SET_TRESHOLD
+    /*
       * command     (0x22)
       * arguments   u16   - treshold
       * answer      no
@@ -236,8 +256,9 @@ enum IOcommand {
       Set treshold for ADC_AS_DIGITAL_PORT_READ
       */
 
-    , ADC_AS_DIGITAL_PORT_READ
-      /*
+    ,
+    ADC_AS_DIGITAL_PORT_READ
+    /*
       * command     (0x23)
       * arguments   no
       * answer      u16
@@ -247,8 +268,9 @@ enum IOcommand {
       Not change pin mode
       */
 
-      , ENCODER_SET_PINS = 0x30
-      /*
+    ,
+    ENCODER_SET_PINS = 0x30
+    /*
       * command     (0x30)
       * arguments   u8 - encoder nummber, u8 - encoder A<<4|B pin number
       * answer      
@@ -257,8 +279,9 @@ enum IOcommand {
       4 encoders max
       */
 
-      , ENCODER_GET_DIFF_VALUE
-      /*
+    ,
+    ENCODER_GET_DIFF_VALUE
+    /*
       * command     (0x31)
       * arguments   u8 - encoder number
       * answer      int8_t - diff value
@@ -267,22 +290,28 @@ enum IOcommand {
       4 encoders max
       */
 
-// TODO: section
-//    , 
+    // TODO: section
+    //    ,
     // 0x40 -Advanced PWM functions
-    , PWM_ANALOG_WRITE_U8 = 0x40        // 1b in
+    ,
+    PWM_ANALOG_WRITE_U8 = 0x40 // 1b in
     // 0x60 -Advanced Digital functions
     // 0x80 -Software interfaces
 
     // ... 8 groups, 32 commands each
 
     // etc - start at 0xE0
-    , ETC_VERSION = 0xE0                // command, 4b answer
-    , ETC_ACT_LED_ENABLE                 // command
-    , ETC_ACT_LED_DISABLE                // command
-    , ETC_ACT_LED_BLINK_WITH_COUNTER // 1b in
-    , ETC_NUM_DIGITAL_PINS
-    , ETC_NUM_ANALOG_INPUTS
+    ,
+    ETC_VERSION = 0xE0 // command, 4b answer
+    ,
+    ETC_ACT_LED_ENABLE // command
+    ,
+    ETC_ACT_LED_DISABLE // command
+    ,
+    ETC_ACT_LED_BLINK_WITH_COUNTER // 1b in
+    ,
+    ETC_NUM_DIGITAL_PINS,
+    ETC_NUM_ANALOG_INPUTS
 };
 // section :TODO
 

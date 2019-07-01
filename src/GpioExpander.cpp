@@ -28,12 +28,12 @@ void GpioExpander::reset() {
 }
 
 void GpioExpander::pinMode(int pin, uint8_t mode) {
-    uint16_t sendData = 1<<pin;
+    uint16_t sendData = 1 << pin;
     pinModePort(sendData, mode);
 }
 
 void GpioExpander::digitalWrite(int pin, bool value) {
-    uint16_t sendData = 1<<pin;
+    uint16_t sendData = 1 << pin;
     if (value) {
         writeCmd16BitData(DIGITAL_WRITE_HIGH, sendData);
     } else {
@@ -41,15 +41,14 @@ void GpioExpander::digitalWrite(int pin, bool value) {
     }
 }
 
-uint16_t GpioExpander::mapResolution(uint16_t value, uint8_t from, uint8_t to)
-{
-  if (from == to) {
-    return value;
-  }
-  if (from > to) {
-    return value >> (from-to);
-  }
-  return value << (to-from);
+uint16_t GpioExpander::mapResolution(uint16_t value, uint8_t from, uint8_t to) {
+    if (from == to) {
+        return value;
+    }
+    if (from > to) {
+        return value >> (from - to);
+    }
+    return value << (to - from);
 }
 
 void GpioExpander::analogWriteResolution(uint8_t res) {
@@ -68,7 +67,7 @@ void GpioExpander::analogWrite(int pin, uint16_t pulseWidth) {
 int GpioExpander::digitalRead(int pin) {
     int result = digitalReadPort();
     if (result >= 0) {
-        result = ((result & (1<<pin)) ? 1 : 0); //:)
+        result = ((result & (1 << pin)) ? 1 : 0); //:)
     }
     return result;
 }
@@ -92,7 +91,7 @@ void GpioExpander::changeAddrWithUID(uint8_t newAddr) {
 
     delay(1);
     // address set on class instantiation
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
 
     _wire->write((uint8_t)MASTER_READED_UID);
     uint8_t temp;
@@ -108,7 +107,7 @@ void GpioExpander::changeAddrWithUID(uint8_t newAddr) {
     // data/setting to be sent to device
     _wire->write(temp);
 
-    temp = (uid) & 0xff;
+    temp = (uid)&0xff;
     // data/setting to be sent to device
     _wire->write(temp);
     _wire->endTransmission();
@@ -168,7 +167,7 @@ void GpioExpander::adcFilter(bool enable) {
 }
 
 void GpioExpander::setEncoderPins(uint8_t encoder, uint8_t pinA, uint8_t pinB) {
-    uint8_t pins = (pinA<<4) | (pinB & 0x0f);
+    uint8_t pins = (pinA << 4) | (pinB & 0x0f);
     uint16_t payload = ((uint16_t)encoder << 8) | pins;
     writeCmd16BitData(ENCODER_SET_PINS, payload);
 }
@@ -181,14 +180,14 @@ int8_t GpioExpander::readEncoderDiff(uint8_t encoder) {
 }
 
 void GpioExpander::writeCmdPin(IOcommand command, uint8_t pin, bool sendStop) {
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
     _wire->write((uint8_t)command);
     _wire->write(pin);
     _wire->endTransmission(sendStop);
 }
 
 void GpioExpander::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t value, bool sendStop) {
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
     _wire->write((uint8_t)command);
     _wire->write(pin);
     uint8_t temp;
@@ -201,10 +200,9 @@ void GpioExpander::writeCmdPin16Val(IOcommand command, uint8_t pin, uint16_t val
     _wire->endTransmission(sendStop);
 }
 
-
 void GpioExpander::writeCmd16BitData(IOcommand command, uint16_t data) {
     // address set on class instantiation
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
     _wire->write((uint8_t)command);
     uint8_t temp;
     temp = (data >> 8) & 0xff;
@@ -218,7 +216,7 @@ void GpioExpander::writeCmd16BitData(IOcommand command, uint16_t data) {
 
 void GpioExpander::writeCmd8BitData(IOcommand command, uint8_t data) {
     // address set on class instantiation
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
     _wire->write((uint8_t)command);
     // data/setting to be sent to device
     _wire->write(data);
@@ -226,7 +224,7 @@ void GpioExpander::writeCmd8BitData(IOcommand command, uint8_t data) {
 }
 
 void GpioExpander::writeCmd(IOcommand command, bool sendStop) {
-    _wire->beginTransmission( _i2cAddress );
+    _wire->beginTransmission(_i2cAddress);
     _wire->write((uint8_t)command);
     _wire->endTransmission(sendStop);
 }
@@ -249,8 +247,7 @@ int GpioExpander::read16Bit() {
     uint8_t byteCount = 2;
     _wire->requestFrom(_i2cAddress, byteCount);
     uint16_t counter = 0xffff;
-    while (_wire->available() < byteCount)
-    {
+    while (_wire->available() < byteCount) {
         delay(0);
         if (!(--counter))
             return result;
@@ -268,8 +265,7 @@ uint32_t GpioExpander::read32bit() {
     _wire->requestFrom(_i2cAddress, byteCount);
     uint16_t counter = 0xffff;
 
-    while (_wire->available() < byteCount)
-    {
+    while (_wire->available() < byteCount) {
         delay(0);
         if (!(--counter))
             return result;
@@ -277,8 +273,8 @@ uint32_t GpioExpander::read32bit() {
 
     result = 0;
     for (uint8_t i = 0; i < byteCount - 1; ++i) {
-      result |= _wire->read();
-      result <<= 8;
+        result |= _wire->read();
+        result <<= 8;
     }
     result |= _wire->read();
     return result;

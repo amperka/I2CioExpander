@@ -9,15 +9,14 @@
  * License: GPLv3, all text here must be included in any redistribution.
  */
 
-#include <Arduino.h>
 #include "GpioExpander.h"
+#include <Arduino.h>
 #include <Wire.h>
 
 #ifndef OCTOLINER_H
 #define OCTOLINER_H
 
-class Octoliner : public GpioExpander
-{
+class Octoliner : public GpioExpander {
 public:
     Octoliner(uint8_t i2caddress = 42);
     void begin();
@@ -28,22 +27,15 @@ public:
     uint8_t getBinaryLine(); // fast and dirty
     uint8_t getBinaryLine(uint16_t treshold); //slow and high accuracy
     float mapLine(uint8_t binaryLine);
-    float  mapLine(int binaryLine[8]);
+    float mapLine(int binaryLine[8]);
 
 private:
     const uint8_t _ledBrightnessPin = 9;
-    const uint8_t _sensePin = 0; 	
+    const uint8_t _sensePin = 0;
     const uint8_t _sensorPinMap[8] = {
-                                  4
-                                , 5
-                                , 6
-                                , 8
-                                , 7
-                                , 3
-                                , 2
-                                , 1
-                            };
+        4, 5, 6, 8, 7, 3, 2, 1
+    };
     float value;
 };
 
-#endif  // OCTOLINER_H
+#endif // OCTOLINER_H
