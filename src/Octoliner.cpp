@@ -1,6 +1,7 @@
 #include "Octoliner.h"
 
 Octoliner::Octoliner(uint8_t i2caddress) : GpioExpander(i2caddress) {
+    value = 0.;
 }
 
 void Octoliner::begin() {
@@ -65,17 +66,102 @@ float Octoliner::mapLine(uint8_t binaryLine) {
 }
 
 float Octoliner::mapLine(int binaryLine[8]) {
-	long sum = 0;
-	long avg = 0;
-	int8_t weight[] = {4, 3, 2, 1, -1, -2, -3, -4};
-	for (int i = 0; i < 8; i++) {
-		if (binaryLine[i]) {
-			sum += binaryLine[i];
-			avg += binaryLine[i] * weight[i];
-		}
-	}
-	if (sum != 0) {
-		return (float)avg / (float)sum / 4.0;
-	}
-	return 0;
+    byte pattern = 0;
+    // search min and max values
+    int min = 32767;
+    int max = 0;
+    for (int i = 0; i < 8; i++) {
+        if (binaryLine[i] < min)
+            min = binaryLine[i];
+        if (binaryLine[i] > max)
+            max = binaryLine[i];
+    }
+    // calculate border level
+    int border = min + (max - min) / 2;
+    // create bit pattern
+    for (int i = 0; i < 8; i++) {
+        pattern = (pattern << 1) + ((binaryLine[i] < border) ? 0 : 1);
+    }
+    switch (pattern) {
+    case 0b00011000:
+        value = 0;
+        break;
+
+    case 0b00010000:
+        value = 0.25;
+        break;
+    case 0b00111000:
+        value = 0.25;
+        break;
+    case 0b00001000:
+        value = -0.25;
+        break;
+    case 0b00011100:
+        value = -0.25;
+        break;
+
+    case 0b00110000:
+        value = 0.375;
+        break;
+    case 0b00001100:
+        value = -0.375;
+        break;
+
+    case 0b00100000:
+        value = 0.5;
+        break;
+    case 0b01110000:
+        value = 0.5;
+        break;
+    case 0b00000100:
+        value = -0.5;
+        break;
+    case 0b00001110:
+        value = -0.5;
+        break;
+
+    case 0b01100000:
+        value = 0.625;
+        break;
+    case 0b11100000:
+        value = 0.625;
+        break;
+    case 0b00000110:
+        value = -0.625;
+        break;
+    case 0b00000111:
+        value = -0.625;
+        break;
+
+    case 0b01000000:
+        value = 0.75;
+        break;
+    case 0b11110000:
+        value = 0.75;
+        break;
+    case 0b00000010:
+        value = -0.75;
+        break;
+    case 0b00001111:
+        value = -0.75;
+        break;
+
+    case 0b11000000:
+        value = 0.875;
+        break;
+    case 0b00000011:
+        value = -0.875;
+        break;
+
+    case 0b10000000:
+        value = 1.0;
+        break;
+    case 0b00000001:
+        value = -1.0;
+        break;
+
+    default:
+        break; // for other patterns return previous value
+    }
+    return value;
 }

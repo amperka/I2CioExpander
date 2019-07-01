@@ -32,6 +32,7 @@ private:
                                 , 2
                                 , 1
                             };
+    float value;
 };
 
 #endif  // OCTOLINER_H
