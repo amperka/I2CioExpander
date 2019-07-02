@@ -89,10 +89,10 @@ float Octoliner::mapLine(int binaryLine[8]) {
             max = binaryLine[i];
     }
     // calculate border level
-    int border = min + (max - min) / 2;
+    int threshold = min + (max - min) / 2;
     // create bit pattern
     for (int i = 0; i < 8; i++) {
-        pattern = (pattern << 1) + ((binaryLine[i] < border) ? 0 : 1);
+        pattern = (pattern << 1) + ((binaryLine[i] < threshold) ? 0 : 1);
     }
     switch (pattern) {
     case 0b00011000:
