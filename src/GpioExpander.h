@@ -1,27 +1,36 @@
+/*
+ * This file is a part of modules library.
+ *
+ * Defines: gpio expander driver
+ * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * 
+ * Author: Vasily Basalaev <vasily@amperka.ru>
+ * License: GPLv3, all text here must be included in any redistribution.
+ */
+
+#include "i2cioCommands.h"
 #include <Arduino.h>
 #include <Wire.h>
-#include "i2cioCommands.h"
 
-#ifndef _GPIO_EXPANDER_
-#define _GPIO_EXPANDER_
+#ifndef __GPIOEXPANDER_H__
+#define __GPIOEXPANDER_H__
 
 #ifndef INPUT_PULLDOWN
-#define INPUT_PULLDOWN          0x3
+#define INPUT_PULLDOWN 0x3
 #endif
 
 #ifndef DEFAULT_GPIOEXP_ADDR
-#define DEFAULT_GPIOEXP_ADDR    42
+#define DEFAULT_GPIOEXP_ADDR 42
 #endif
 
 #ifndef I2CIO_PIN_COUNT
-#define I2CIO_PIN_COUNT         10
+#define I2CIO_PIN_COUNT 10
 #endif
 
 // we need to say something to identity... Let's say "slot"
 #define IS_HE_SAY_SLOT (uint32_t)(((uint32_t)'s' << 24) | ((uint32_t)'l' << 16) | ((uint32_t)'o' << 8) | ((uint32_t)'t'))
 
-class GpioExpander 
-{
+class GpioExpander {
 public:
     GpioExpander(uint8_t i2cAddress = 42);
     void begin();
@@ -58,9 +67,9 @@ private:
     void writeCmd8BitData(IOcommand command, uint8_t data);
     void writeCmd(IOcommand command, bool sendStop = true);
     int8_t readInt8Bit();
-    int  read16Bit();
+    int read16Bit();
     uint32_t read32bit();
     uint16_t mapResolution(uint16_t value, uint8_t from, uint8_t to);
 };
 
-#endif //_GPIO_EXPANDER_
+#endif //__GPIOEXPANDER_H__
