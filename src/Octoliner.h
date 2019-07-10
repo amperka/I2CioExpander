@@ -35,7 +35,7 @@ private:
     const uint8_t _sensorPinMap[8] = {
         4, 5, 6, 8, 7, 3, 2, 1
     };
-    float value;
+    float _value;
 };
 
 #endif // __OCTOLINER_H__
