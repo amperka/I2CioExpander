@@ -233,11 +233,8 @@ int8_t GpioExpander::readInt8Bit() {
     int result = 0;
     uint8_t byteCount = 1;
     _wire->requestFrom(_i2cAddress, byteCount);
-    uint16_t counter = 0xffff;
-    while (_wire->available() < byteCount) {
-        if (!(--counter))
-            return result;
-    }
+    if (_wire->available() != byteCount)
+        return result;
     result = (int8_t)_wire->read();
     return result;
 }
@@ -246,12 +243,8 @@ int GpioExpander::read16Bit() {
     int result = -1;
     uint8_t byteCount = 2;
     _wire->requestFrom(_i2cAddress, byteCount);
-    uint16_t counter = 0xffff;
-    while (_wire->available() < byteCount) {
-        delay(0);
-        if (!(--counter))
-            return result;
-    }
+    if (_wire->available() != byteCount)
+        return result;
     result = _wire->read();
     result <<= 8;
     result |= _wire->read();
