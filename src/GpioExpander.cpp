@@ -2,7 +2,7 @@
  * This file is a part of modules library
  *
  * Realise: gpio expander driver
- * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * Â© Amperka LLC (https://amperka.com, dev@amperka.com)
  * 
  * Author: Vasily Basalaev <vasily@amperka.ru>
  * License: GPLv3, all text here must be included in any redistribution.
