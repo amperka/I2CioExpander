@@ -2,7 +2,7 @@
  * This file is a part of modules library
  *
  * Realise: gpio expander driver
- * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * Â© Amperka LLC (https://amperka.com, dev@amperka.com)
  * 
  * Author: Vasily Basalaev <vasily@amperka.ru>
  * License: GPLv3, all text here must be included in any redistribution.
@@ -256,14 +256,8 @@ uint32_t GpioExpander::read32bit() {
     uint32_t result = 0xffffffff;
     uint8_t byteCount = 4;
     _wire->requestFrom(_i2cAddress, byteCount);
-    uint16_t counter = 0xffff;
-
-    while (_wire->available() < byteCount) {
-        delay(0);
-        if (!(--counter))
-            return result;
-    }
-
+    if (_wire->available() != byteCount)
+        return result;
     result = 0;
     for (uint8_t i = 0; i < byteCount - 1; ++i) {
         result |= _wire->read();

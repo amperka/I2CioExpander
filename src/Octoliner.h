@@ -2,7 +2,7 @@
  * This file is a part of Dragster car set library.
  *
  * Defines: octoliner object - 8-point line-folowing sensor driver
- * © Amperka LLC (https://amperka.com, dev@amperka.com)
+ * Â© Amperka LLC (https://amperka.com, dev@amperka.com)
  * 
  * Author: Vasily Basalaev <vasily@amperka.ru>
  * Refactored by: Yury Botov <by@amperka.com>
