@@ -252,7 +252,6 @@ int GpioExpander::read16Bit() {
 }
 
 uint32_t GpioExpander::read32bit() {
-    // https://www.youtube.com/watch?v=y73hyMP1a-E
     uint32_t result = 0xffffffff;
     uint8_t byteCount = 4;
     _wire->requestFrom(_i2cAddress, byteCount);
